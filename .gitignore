@@ -1,0 +1,62 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environment and secrets
+.env
+.env.local
+*.pem
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Testing / coverage
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+
+# Terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/.terraform.lock.hcl
+infra/*.tfplan
+infra/backend.tf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Static assets (optional: commit logo; ignore large uploads)
+# static/assets/*.jpg
+# static/assets/*.png

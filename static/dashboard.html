@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – Scholarvalley</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        <a href="/dashboard" class="nav-active">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+        <button type="button" class="btn btn-logout" id="logout-btn">Log out</button>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <section class="section section-page section-dashboard">
+      <div class="container">
+        <h1>Applicant profiles</h1>
+        <p class="section-intro">View and manage applicant profiles. Clients see their own; managers see all.</p>
+
+        <div id="dashboard-status" class="form-status" aria-live="polite"></div>
+        <div id="applicants-table-wrap" class="table-wrap" style="display: none;">
+          <table class="applicants-table" id="applicants-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Latest education</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th id="th-owner" style="display: none;">Owner email</th>
+              </tr>
+            </thead>
+            <tbody id="applicants-tbody">
+            </tbody>
+          </table>
+        </div>
+        <p id="no-applicants" class="no-data" style="display: none;">No applicants yet. <a href="/register">Register</a> to create a profile.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

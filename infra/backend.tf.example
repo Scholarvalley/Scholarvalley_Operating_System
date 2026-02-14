@@ -1,0 +1,11 @@
+# Rename to backend.tf and fill in bucket/key to store Terraform state in S3.
+# This keeps state consistent across runs and allows locking.
+
+# terraform {
+#   backend "s3" {
+#     bucket         = "your-terraform-state-bucket"
+#     key            = "scholarvalley/terraform.tfstate"
+#     region         = "us-east-1"
+#     dynamodb_table = "terraform-lock"
+#   }
+# }

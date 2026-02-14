@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholarvalley – Education & College Consulting</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/" class="nav-active">Home</a>
+        <a href="/services">Services</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-inner">
+        <h1>Your Path to Higher Education</h1>
+        <p class="hero-tagline">Expert guidance for college admissions, scholarships, and academic success.</p>
+        <div class="hero-actions">
+          <a href="/contact" class="btn btn-primary">Get in Touch</a>
+          <a href="/services" class="btn btn-secondary">Our Services</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section section-services">
+      <div class="container">
+        <h2>What We Offer</h2>
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>College Admissions</h3>
+            <p>Strategic planning and application support for universities in the U.S. and abroad.</p>
+          </article>
+          <article class="service-card">
+            <h3>Scholarship Guidance</h3>
+            <p>Identify and pursue scholarships and financial aid tailored to your profile.</p>
+          </article>
+          <article class="service-card">
+            <h3>Eligibility & Planning</h3>
+            <p>Assessment and roadmap so you know where you stand and what to do next.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section section-about">
+      <div class="container">
+        <h2>About Scholarvalley</h2>
+        <p class="about-lead">We help students and families navigate the path to higher education with clarity and confidence.</p>
+        <p>From eligibility checks and document preparation to application strategy and follow-up, our system supports you every step of the way.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-contact">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <p>Reach out to start your journey. Our team is here to help.</p>
+        <p class="contact-note">Use the <a href="/docs">API documentation</a> to integrate with the Scholarvalley platform programmatically.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>

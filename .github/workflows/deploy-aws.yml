@@ -1,0 +1,62 @@
+# Build Scholarvalley Docker image and push to AWS ECR.
+# Optionally run Terraform to deploy (uncomment terraform steps and set secrets).
+
+name: Build and push to ECR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: scholarvalley
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+        # If not using OIDC, use access keys instead:
+        # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      # Optional: force ECS service to pull new image
+      # - name: Update ECS service
+      #   run: |
+      #     aws ecs update-service \
+      #       --cluster scholarvalley-dev \
+      #       --service scholarvalley-dev \
+      #       --force-new-deployment \
+      #       --region ${{ env.AWS_REGION }}
+
+      # Optional: Terraform plan (add secrets: AWS_ROLE_ARN or AWS_ACCESS_KEY_ID/SECRET, TF_VAR_db_password)
+      # - name: Terraform plan
+      #   working-directory: infra
+      #   run: |
+      #     terraform init
+      #     terraform plan -var="db_password=${{ secrets.TF_VAR_db_password }}"

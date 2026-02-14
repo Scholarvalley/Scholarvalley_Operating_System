@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register – Scholarvalley</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/register" class="nav-active">Register</a>
+        <a href="/login">Login</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <section class="section section-page section-register">
+      <div class="container container-narrow">
+        <h1>Client registration</h1>
+        <p class="section-intro">Create your account and submit your education details and documents.</p>
+
+        <form id="register-form" class="register-form" novalidate>
+          <div class="form-row">
+            <label for="first_name">First name <span class="required">*</span></label>
+            <input type="text" id="first_name" name="first_name" required autocomplete="given-name">
+            <span class="form-error" id="err_first_name" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="surname">Surname <span class="required">*</span></label>
+            <input type="text" id="surname" name="surname" required autocomplete="family-name">
+            <span class="form-error" id="err_surname" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+            <span class="form-error" id="err_email" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="confirm_email">Confirm email address <span class="required">*</span></label>
+            <input type="email" id="confirm_email" name="confirm_email" required autocomplete="email">
+            <span class="form-error" id="err_confirm_email" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="password">Password <span class="required">*</span></label>
+            <input type="password" id="password" name="password" required autocomplete="new-password" minlength="8">
+            <span class="form-error" id="err_password" aria-live="polite"></span>
+            <small class="form-hint">At least 8 characters.</small>
+          </div>
+
+          <div class="form-row">
+            <label for="latest_education">Latest education <span class="required">*</span></label>
+            <input type="text" id="latest_education" name="latest_education" required placeholder="e.g. Bachelor of Science, XYZ University" autocomplete="organization-title">
+            <span class="form-error" id="err_latest_education" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="transcript">Upload transcript <span class="required">*</span></label>
+            <input type="file" id="transcript" name="transcript" accept=".pdf,.doc,.docx,image/*" required>
+            <span class="form-error" id="err_transcript" aria-live="polite"></span>
+            <small class="form-hint">PDF, Word, or image. Max 20 MB.</small>
+          </div>
+
+          <div class="form-row">
+            <label for="degree">Upload latest degree <span class="required">*</span></label>
+            <input type="file" id="degree" name="degree" accept=".pdf,.doc,.docx,image/*" required>
+            <span class="form-error" id="err_degree" aria-live="polite"></span>
+            <small class="form-hint">PDF, Word, or image. Max 20 MB.</small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Register</button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+          </div>
+
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+  <script src="/static/register.js"></script>
+</body>
+</html>

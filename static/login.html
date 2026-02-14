@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Scholarvalley</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/register">Register</a>
+        <a href="/login" class="nav-active">Login</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <section class="section section-page section-login">
+      <div class="container container-narrow">
+        <h1>Log in</h1>
+        <p class="section-intro">Sign in to access your dashboard and applicant profiles.</p>
+
+        <form id="login-form" class="register-form" novalidate>
+          <div class="form-row">
+            <label for="email">Email address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+            <span class="form-error" id="err_email" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="password">Password <span class="required">*</span></label>
+            <input type="password" id="password" name="password" required autocomplete="current-password">
+            <span class="form-error" id="err_password" aria-live="polite"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Log in</button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+          </div>
+
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </form>
+
+        <p class="form-footer">Don't have an account? <a href="/register">Register here</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+  <script src="/static/login.js"></script>
+</body>
+</html>

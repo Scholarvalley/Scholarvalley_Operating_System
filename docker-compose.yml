@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: scholarvalley-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: scholarvalley
+      POSTGRES_PASSWORD: scholarvalley
+      POSTGRES_DB: scholarvalley
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    container_name: scholarvalley-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://scholarvalley:scholarvalley@db:5432/scholarvalley
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+volumes:
+  db_data:
+
