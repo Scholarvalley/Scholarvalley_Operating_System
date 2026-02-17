@@ -97,6 +97,20 @@ resource "aws_iam_role_policy_attachment" "ecs_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+# Allow ECS execution role to read Secrets Manager
+resource "aws_iam_role_policy" "ecs_execution_secrets" {
+  name   = "${local.name}-ecs-execution-secrets"
+  role   = aws_iam_role.ecs_execution.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["secretsmanager:GetSecretValue"]
+      Resource = aws_secretsmanager_secret.app.arn
+    }]
+  })
+}
+
 # IAM – ECS task role (app: S3, SES, etc.)
 resource "aws_iam_role" "ecs_task" {
   name = "${local.name}-ecs-task"
@@ -270,6 +284,13 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+# Secrets Manager – app secrets
+resource "aws_secretsmanager_secret" "app" {
+  name        = "${local.name}-secrets"
+  description = "Scholarvalley application secrets (DATABASE_URL, JWT_SECRET_KEY, etc.)"
+  tags        = { Name = local.name, Environment = var.environment }
+}
+
 # ECS cluster and service
 resource "aws_ecs_cluster" "main" {
   name = local.name
@@ -302,8 +323,16 @@ resource "aws_ecs_task_definition" "app" {
       { name = "AWS_REGION", value = var.aws_region },
       { name = "AWS_S3_BUCKET", value = aws_s3_bucket.app.id }
     ]
-    # Secrets: inject DATABASE_URL, JWT_SECRET_KEY etc. from Secrets Manager in your pipeline
-    secrets = []
+    secrets = [
+      {
+        name      = "DATABASE_URL"
+        valueFrom = "${aws_secretsmanager_secret.app.arn}:DATABASE_URL::"
+      },
+      {
+        name      = "JWT_SECRET_KEY"
+        valueFrom = "${aws_secretsmanager_secret.app.arn}:JWT_SECRET_KEY::"
+      }
+    ]
   }])
 }
 

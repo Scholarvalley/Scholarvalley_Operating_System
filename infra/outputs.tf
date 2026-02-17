@@ -44,3 +44,23 @@ output "database_url_placeholder" {
   value       = var.create_rds ? "postgresql+psycopg2://${var.db_username}:PASSWORD@${aws_db_instance.main[0].endpoint}/${var.db_name}" : null
   sensitive   = true
 }
+
+output "cluster_name" {
+  description = "ECS cluster name"
+  value       = aws_ecs_cluster.main.name
+}
+
+output "service_name" {
+  description = "ECS service name"
+  value       = aws_ecs_service.app.name
+}
+
+output "secrets_manager_secret_arn" {
+  description = "ARN of the Secrets Manager secret for app configuration"
+  value       = aws_secretsmanager_secret.app.arn
+}
+
+output "secrets_manager_secret_name" {
+  description = "Name of the Secrets Manager secret"
+  value       = aws_secretsmanager_secret.app.name
+}

@@ -10,6 +10,10 @@ This folder provisions AWS resources so the whole app runs on AWS: **RDS Postgre
 - AWS CLI configured (e.g. `aws configure`) with permissions to create the resources below
 - For RDS: set a secure `db_password` (see below)
 
+**Install on macOS:** Run `./setup-prerequisites.sh` (uses Homebrew). If Homebrew is not installed, install it first, then run the script. Alternatively:
+- **AWS CLI:** [Install guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) or `brew install awscli`
+- **Terraform:** [Download](https://www.terraform.io/downloads) or `brew install terraform`
+
 ## Deploy from your machine (you need AWS access)
 
 All steps use **your** AWS account. Configure the AWS CLI with credentials that can create the resources (VPC/EC2, RDS, ECS, S3, ECR, IAM, etc.):
