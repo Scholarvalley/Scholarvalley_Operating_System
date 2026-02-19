@@ -14,13 +14,34 @@ Backend service for Scholarvalley, built with **FastAPI** and designed to run fu
 - **Payments**: Stripe (checkout sessions + webhooks)
 - **Containerization**: Docker, ready for ECS/Fargate
 
+## On macOS (MacBook)
+
+All instructions in this repo are written for **macOS**. You can run them in Terminal (zsh). Notes:
+
+- **Homebrew** for AWS CLI / Terraform: `brew install awscli terraform` (install Homebrew first if needed).
+- **Docker**: use [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop); start it before `docker compose` or `docker build`.
+- **Paths**: use `/Users/...` paths and forward slashes; no `\` or `C:\`.
+- **Apple Silicon (M1/M2/M3)**: everything works; no extra steps.
+
+## Documentation
+
+| Doc | Purpose |
+|-----|---------|
+| [docs/CODEBASE_CONTEXT.md](docs/CODEBASE_CONTEXT.md) | Full codebase context and structure |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Log of all changes |
+| [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Troubleshooting guide |
+| [docs/DEVELOPER_SETUP.md](docs/DEVELOPER_SETUP.md) | Developer setup (macOS) |
+| [docs/ONBOARDING.md](docs/ONBOARDING.md) | Onboarding guide |
+| [docs/PROMPT_LOG.md](docs/PROMPT_LOG.md) | Prompt log (updated on each new prompt; refer to it for context) |
+| [docs/AWS_ONLY_ARCHITECTURE.md](docs/AWS_ONLY_ARCHITECTURE.md) | AWS-only architecture; DynamoDB as target DB |
+
 ## Local development
 
 ### 1. Virtualenv and dependencies
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate   # macOS/Linux; Windows: .venv\Scripts\activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```

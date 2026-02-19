@@ -1,5 +1,7 @@
 # Scholarvalley – AWS infrastructure (Terraform)
 
+**All commands are for macOS (Terminal).** Use Docker Desktop for Mac and Homebrew for `aws`/`terraform` if needed.
+
 This folder provisions AWS resources so the whole app runs on AWS: **RDS PostgreSQL**, **S3**, **ECR**, **ECS Fargate**, and an **ALB**. Defaults are set to **keep cost low** (~\$40–50/month in dev; see [COST.md](COST.md)).
 
 **Who runs the deploy:** You run Terraform and the Docker push from your own machine (or CI) with **your** AWS credentials. Nothing in this repo can connect to your AWS account automatically.
@@ -35,7 +37,7 @@ Then run the steps below. No automated tool can “connect” to your account fr
 
 2. **Plan and apply** (set a strong `db_password`; required when `create_rds = true`)
    ```bash
-   export TF_VAR_db_password="your_secure_rds_password_here"
+   export TF_VAR_db_password="Geodfroy1!"
    terraform plan
    terraform apply
    ```
