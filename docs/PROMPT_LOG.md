@@ -19,6 +19,12 @@
 
 ### 2025-02 (current session)
 
+- **Prompt:** "now lets commit and push the complete project to git"
+- **Intent:** Commit all current changes and push the full project to the remote (GitHub). Ensure nothing is left uncommitted.
+
+- **Prompt:** "give me step by step on how to confi git"
+- **Intent:** Step-by-step guide to configure Git (identity, remote, etc.) on macOS.
+
 - **Prompt:** "what is the next step"
 - **Intent:** User wants to know the recommended next action(s). See ordered list below (commit docs, deploy AWS, push Git).
 

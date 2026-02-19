@@ -23,7 +23,40 @@ This guide gets a **new developer** from zero to running the app locally and dep
 
 ---
 
-## 2. Clone and enter project
+## 2. Configure Git (one-time, on your Mac)
+
+Do this once per machine so your commits have the right name and email.
+
+**Step 1 – Set your name (use your real name or nickname):**
+```bash
+git config --global user.name "Your Name"
+```
+
+**Step 2 – Set your email (use the email tied to your GitHub/GitLab account):**
+```bash
+git config --global user.email "you@example.com"
+```
+
+**Step 3 – Check it:**
+```bash
+git config --global --list | grep user
+```
+You should see `user.name` and `user.email`.
+
+**Step 4 – Optional: default branch name**
+```bash
+git config --global init.defaultBranch main
+```
+
+**Step 5 – Optional: credential helper (so you don’t type password every push)**  
+For HTTPS, macOS can store credentials in the Keychain:
+```bash
+git config --global credential.helper osxkeychain
+```
+
+---
+
+## 3. Clone and enter project
 
 ```bash
 # If you have a remote (replace with your repo URL):
@@ -36,7 +69,7 @@ cd /Users/mac/Desktop/Python/Scholarvalley_Operating_System
 
 ---
 
-## 3. Python environment (optional for local API dev)
+## 4. Python environment (optional for local API dev)
 
 ```bash
 python3 -m venv .venv
@@ -47,7 +80,7 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Environment variables
+## 5. Environment variables
 
 ```bash
 cp .env.example .env
@@ -66,7 +99,7 @@ Optional: `STRIPE_*`, `SES_FROM_EMAIL`, `FRONTEND_ORIGIN`.
 
 ---
 
-## 5. Run with Docker (recommended)
+## 6. Run with Docker (recommended)
 
 ```bash
 docker compose up --build
@@ -87,7 +120,7 @@ Default root user: `root@localhost` / `root123`.
 
 ---
 
-## 6. Run without Docker (API only, DB still in Docker)
+## 7. Run without Docker (API only, DB still in Docker)
 
 Start only Postgres:
 
@@ -107,7 +140,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 ---
 
-## 7. AWS (deploy and CLI)
+## 8. AWS (deploy and CLI)
 
 For deployment and AWS CLI/Terraform:
 
@@ -129,7 +162,7 @@ See `infra/README.md` and `infra/DEPLOYMENT_GUIDE.md` for details.
 
 ---
 
-## 8. Useful commands
+## 9. Useful commands
 
 | Task | Command |
 |------|---------|
@@ -143,7 +176,7 @@ See `infra/README.md` and `infra/DEPLOYMENT_GUIDE.md` for details.
 
 ---
 
-## 9. Project layout (short)
+## 10. Project layout (short)
 
 - **`app/`** – FastAPI app, API routes, models, schemas, services.
 - **`static/`** – Static frontend (HTML/JS/CSS).
