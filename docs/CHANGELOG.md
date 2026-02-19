@@ -6,6 +6,7 @@ All notable changes to the project are logged here. Format: newest first.
 
 ## [Unreleased]
 
+- **Git:** Committed full project (docs: Git config, prompt log, changelog). Push requires adding remote `origin` (see below).
 - **Docs:** Developer setup guide – added step-by-step **Git configuration** (user.name, user.email, default branch, credential helper) for macOS.
 - **Logs:** Rule: **all logs must be updated with new prompts.** On each new user prompt, update PROMPT_LOG.md (add prompt), CHANGELOG.md (if changes or doc updates), and any other project logs. See PROMPT_LOG.md "How to use this log" and persistent constraints.
 - **Docs:** Added `docs/CODEBASE_CONTEXT.md`, `docs/CHANGELOG.md`, `docs/TROUBLESHOOTING.md`, `docs/DEVELOPER_SETUP.md`, `docs/ONBOARDING.md`, `docs/PROMPT_LOG.md`, `docs/AWS_ONLY_ARCHITECTURE.md`.
