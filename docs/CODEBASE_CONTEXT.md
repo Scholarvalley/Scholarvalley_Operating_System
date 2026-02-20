@@ -9,6 +9,7 @@ This file provides a single reference for the **entire codebase context**. Use i
 - **Name:** Scholarvalley Operating System (backend + static frontend).
 - **Purpose:** Backend API for Scholarvalley (applicants, documents, auth, payments, tasks, messages, eligibility, ML consent). Serves static frontend and runs on AWS (ECS Fargate, RDS, S3, etc.).
 - **Platform:** macOS (MacBook); all commands and paths assume Terminal/zsh, Homebrew, Docker Desktop for Mac.
+- **GitHub:** Username **scholarvalley**. Canonical repo URL: `https://github.com/scholarvalley/Scholarvalley_Operating_System.git` (SSH: `git@github.com:scholarvalley/Scholarvalley_Operating_System.git`).
 - **Architecture direction:** Use **only AWS services**; database target is **DynamoDB** (or AWS-managed DB). See `docs/AWS_ONLY_ARCHITECTURE.md`.
 
 ---

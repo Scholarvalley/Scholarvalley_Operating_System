@@ -57,6 +57,6 @@ Thumbs.db
 *.log
 logs/
 
-# Static assets (optional: commit logo; ignore large uploads)
-# static/assets/*.jpg
-# static/assets/*.png
+# Large static assets (keep locally; push fails if >~10 MB total)
+static/assets/*.jpg
+static/assets/logo.png

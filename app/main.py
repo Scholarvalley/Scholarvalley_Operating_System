@@ -44,6 +44,15 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def static_cache_control(request: Request, call_next):
+    """Ensure static assets (e.g. logo.png) can be updated without hard refresh."""
+    response = await call_next(request)
+    if request.url.path.startswith("/static/"):
+        response.headers.setdefault("Cache-Control", "no-cache")
+    return response
+
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """Return JSON for unhandled exceptions (not HTTPException) so the frontend never sees HTML."""

@@ -32,7 +32,7 @@ Do this once per machine so your commits have the right name and email.
 git config --global user.name "Your Name"
 ```
 
-**Step 2 – Set your email (use the email tied to your GitHub/GitLab account):**
+**Step 2 – Set your email (use the email tied to your GitHub account; e.g. for username scholarvalley):**
 ```bash
 git config --global user.email "you@example.com"
 ```
@@ -59,8 +59,8 @@ git config --global credential.helper osxkeychain
 ## 3. Clone and enter project
 
 ```bash
-# If you have a remote (replace with your repo URL):
-git clone https://github.com/YOUR_ORG/Scholarvalley_Operating_System.git
+# Canonical repo URL: https://github.com/scholarvalley/Scholarvalley_Operating_System.git
+git clone https://github.com/scholarvalley/Scholarvalley_Operating_System.git
 cd Scholarvalley_Operating_System
 
 # Or if you already have the folder:
@@ -176,14 +176,46 @@ See `infra/README.md` and `infra/DEPLOYMENT_GUIDE.md` for details.
 
 ---
 
-## 10. Project layout (short)
+## 10. Testing
+
+**Backend (API) tests** – Run the full test suite (health, auth, applicants, dashboard, eligibility, messages, tasks, ML, uploads, documents, payments, frontend pages):
+
+```bash
+# From project root; use a venv with dependencies installed
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python -m pytest tests/ -v
+```
+
+Tests use an in-memory SQLite DB and mocked S3/Stripe where needed. No real database or AWS/Stripe required.
+
+**Frontend / live-website check** – With the server running (e.g. `uvicorn app.main:app --reload`), run:
+
+```bash
+pip install requests   # if not already installed
+python scripts/test_website_functionality.py
+```
+
+This checks that every page loads, key content and forms exist, and API behaviour (health, login 400, protected 401) is correct.
+
+**Static page structure** – Validate header/nav/main/footer and optional archive comparison:
+
+```bash
+python scripts/validate_archive_pages.py
+# Optional: python scripts/validate_archive_pages.py --archive-dir path/to/saved/wayback/html
+```
+
+---
+
+## 11. Project layout (short)
 
 - **`app/`** – FastAPI app, API routes, models, schemas, services.
 - **`static/`** – Static frontend (HTML/JS/CSS).
 - **`infra/`** – Terraform (S3, ECR, RDS, ECS, ALB, Secrets Manager).
 - **`docs/`** – Architecture, context, changelog, troubleshooting, onboarding, prompt log.
 - **`alembic/`** – DB migrations.
-- **`scripts/`** – Seed and utility scripts.
+- **`scripts/`** – Seed, validation, and test scripts.
+- **`tests/`** – Pytest API and frontend-structure tests.
 
 Full context: **`docs/CODEBASE_CONTEXT.md`**.  
 Troubleshooting: **`docs/TROUBLESHOOTING.md`**.  

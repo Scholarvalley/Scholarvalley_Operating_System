@@ -9,7 +9,7 @@ This folder provisions AWS resources so the whole app runs on AWS: **RDS Postgre
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads) >= 1.0
-- AWS CLI configured (e.g. `aws configure`) with permissions to create the resources below
+- AWS CLI configured (e.g. `aws configure`) with permissions to create the resources below. If you get **403 UnauthorizedOperation** (e.g. `ec2:DescribeVpcs`), an account admin must attach the policy in **`infra/iam-policy-terraform-deploy.json`** to your IAM user, or attach **AdministratorAccess** for dev.
 - For RDS: set a secure `db_password` (see below)
 
 **Install on macOS:** Run `./setup-prerequisites.sh` (uses Homebrew). If Homebrew is not installed, install it first, then run the script. Alternatively:
@@ -104,6 +104,18 @@ aws ecs update-service --cluster scholarvalley-dev --service scholarvalley-dev -
 ## Cost
 
 Defaults are chosen to **minimize cost** (smallest Fargate task, single-AZ RDS, default VPC). See **[COST.md](COST.md)** for rough monthly estimates and ways to reduce spend further.
+
+## IAM permissions (403 UnauthorizedOperation)
+
+If `./deploy.sh` or `terraform plan` fails with **You are not authorized to perform this operation** (e.g. `ec2:DescribeVpcs`):
+
+1. An **AWS account admin** must add permissions for your IAM user.
+2. Use the policy in this folder: **`iam-policy-terraform-deploy.json`**  
+   IAM → Users → [your user] → Add permissions → Create inline policy → JSON → paste the file contents → name e.g. **ScholarvalleyTerraformDeploy**.
+3. Or for a dev account only: attach the managed policy **AdministratorAccess** to your user.
+4. Then run `./deploy.sh` again.
+
+See **docs/TROUBLESHOOTING.md** (section "Terraform: You are not authorized").
 
 ## Cleanup
 

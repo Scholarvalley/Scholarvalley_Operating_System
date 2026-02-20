@@ -51,6 +51,27 @@ fi
 echo "✅ Docker found: $(docker --version)"
 echo ""
 
+# Check AWS permissions (Terraform needs at least EC2 DescribeVpcs)
+echo "🔑 Checking AWS permissions (required for Terraform)..."
+if ! aws ec2 describe-vpcs --max-items 1 &>/dev/null; then
+    echo ""
+    echo "❌ Your IAM user does not have permission to run Terraform (e.g. ec2:DescribeVpcs)."
+    echo "   An AWS account admin must attach the required policy to your user."
+    echo ""
+    echo "   Option 1 – Use the policy in this repo:"
+    echo "     1. Open IAM → Users → [your user] → Add permissions → Create inline policy."
+    echo "     2. Choose JSON and paste the contents of:"
+    echo "        $SCRIPT_DIR/iam-policy-terraform-deploy.json"
+    echo "     3. Name the policy e.g. ScholarvalleyTerraformDeploy and save."
+    echo ""
+    echo "   Option 2 – For dev only: attach AWS managed policy AdministratorAccess to your user."
+    echo ""
+    echo "   Then run this script again."
+    exit 1
+fi
+echo "✅ AWS permissions OK"
+echo ""
+
 # Prompt for database password
 if [ -z "$TF_VAR_db_password" ]; then
     echo "🔐 Database Password"
@@ -89,9 +110,18 @@ echo ""
 echo "🚀 Applying Terraform configuration..."
 terraform apply tfplan
 
-# Get outputs
-ECR_REPO=$(terraform output -raw ecr_repository_uri)
-AWS_REGION_OUT=$(terraform output -raw aws_region)
+# Ensure outputs are in state (fixes "state has no outputs" when state was stale)
+echo "Refreshing state for outputs..."
+terraform refresh -input=false 2>/dev/null || true
+
+# Get outputs (required)
+if ! ECR_REPO=$(terraform output -raw ecr_repository_uri 2>/dev/null) || [ -z "$ECR_REPO" ]; then
+    echo "❌ Could not read Terraform outputs. State may have no outputs."
+    echo "   Run: cd $SCRIPT_DIR && terraform apply -auto-approve && terraform refresh"
+    echo "   Then re-run this script."
+    exit 1
+fi
+AWS_REGION_OUT=$(terraform output -raw aws_region 2>/dev/null || echo "us-east-1")
 RDS_ENDPOINT=$(terraform output -raw rds_endpoint 2>/dev/null || echo "")
 RDS_DB_NAME=$(terraform output -raw rds_database_name 2>/dev/null || echo "scholarvalley")
 DB_USERNAME="scholarvalley"

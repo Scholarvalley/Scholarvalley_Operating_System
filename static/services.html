@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <header class="site-header">
+<body class="bg-image">
+  <header class="site-header header-bg">
     <div class="header-inner">
       <a href="/" class="logo">
         <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
@@ -33,11 +33,27 @@
   </header>
 
   <main class="page-main">
+    <div class="page-banner page-banner--services" aria-hidden="true">
+      <h1>Services</h1>
+    </div>
     <section class="section section-page section-services">
       <div class="container">
-        <h1>Our Services</h1>
-        <p class="about-lead">Replace this with the exact text from your archive Services page.</p>
-        <p>Copy every service description, list, and image caption from the archive here. Save any background or section images into <code>static/assets/</code>.</p>
+        <h1>Services</h1>
+        <p class="about-lead">Dear students,</p>
+        <p>Here are the steps Scholarvalley follows:</p>
+        
+        <ul class="services-list">
+          <li><strong>Document review:</strong> The document review is a <strong>$5 for Prospective Freshman</strong> / <strong>$10 for Continuing Undergraduate</strong> / <strong>$15 for Graduate Student</strong> allowing us to determine your chances to get some scholarships. From this document review a statistical percentage of chance will be generated.</li>
+          <li><strong>Applications:</strong> Once the document review has been done, applications has to be submitted to our universities partners. An Scholarvalley ambassador will guide you with the application process and contacting our partners universities.</li>
+          <li><strong>Scholarship:</strong> Upon scholarship receipt, please notify your Scholarvalley officer.</li>
+        </ul>
+        
+        <p>Please see attached the list of documents required in order to do the evaluation. If you have any other questions, please feel free to email us at:</p>
+        <p><a href="mailto:support@scholarvalley.com">support@scholarvalley.com</a></p>
+        
+        <p>Thank you for your interest in Scholarvalley,</p>
+        
+        <p><a href="/register" class="btn btn-primary">For Your Documents Review<br>Please Click</a></p>
       </div>
     </section>
   </main>

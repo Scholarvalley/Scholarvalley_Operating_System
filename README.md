@@ -23,6 +23,22 @@ All instructions in this repo are written for **macOS**. You can run them in Ter
 - **Paths**: use `/Users/...` paths and forward slashes; no `\` or `C:\`.
 - **Apple Silicon (M1/M2/M3)**: everything works; no extra steps.
 
+## Git and GitHub
+
+**Repository URL:** `https://github.com/scholarvalley/Scholarvalley_Operating_System.git`  
+(GitHub username: **scholarvalley**.)
+
+**1. Create the repo on GitHub first** (once): Go to [github.com/new](https://github.com/new). Owner: **scholarvalley**. Repository name: **Scholarvalley_Operating_System**. Do *not* add a README, .gitignore, or license (this repo already has them). Click **Create repository**.
+
+**2. Add remote and push** (if you haven’t already):
+
+```bash
+git remote add origin https://github.com/scholarvalley/Scholarvalley_Operating_System.git
+git push -u origin main
+```
+
+(Use `git@github.com:scholarvalley/Scholarvalley_Operating_System.git` if you use SSH.)
+
 ## Documentation
 
 | Doc | Purpose |
@@ -34,6 +50,7 @@ All instructions in this repo are written for **macOS**. You can run them in Ter
 | [docs/ONBOARDING.md](docs/ONBOARDING.md) | Onboarding guide |
 | [docs/PROMPT_LOG.md](docs/PROMPT_LOG.md) | Prompt log (updated on each new prompt; refer to it for context) |
 | [docs/AWS_ONLY_ARCHITECTURE.md](docs/AWS_ONLY_ARCHITECTURE.md) | AWS-only architecture; DynamoDB as target DB |
+| [docs/FRONTEND_PAGES.md](docs/FRONTEND_PAGES.md) | Frontend pages (/, /about, /services, /contact, /register, /login, /dashboard) and behaviour |
 
 ## Local development
 

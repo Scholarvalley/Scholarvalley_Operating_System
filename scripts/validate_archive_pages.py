@@ -21,8 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 STATIC_DIR = ROOT / "static"
 
-# Pages we expect
-EXPECTED_PAGES = ["index", "about", "services", "contact"]
+# Pages we expect (all must have header, nav, main, footer)
+EXPECTED_PAGES = ["index", "about", "services", "contact", "register", "login", "dashboard"]
 
 # Required elements (tag or class) that each page must have
 REQUIRED = [

@@ -104,6 +104,26 @@ Use this guide when something fails. **Environment: macOS (MacBook), Terminal/zs
 - **Cause:** ECR login token expired (12h).
 - **Fix:** Re-run: `aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account>.dkr.ecr.<region>.amazonaws.com`, then push again.
 
+### Terraform: "The state file has no outputs defined or all are empty"
+
+- **Cause:** No successful `terraform apply` has been run yet, or state was left without outputs (e.g. failed apply, or running a script that calls `terraform output` before apply).
+- **Fix:** Run a full apply, then refresh so outputs are in state:
+  ```bash
+  cd infra
+  export TF_VAR_db_password="your_secure_password"
+  terraform apply -auto-approve
+  terraform refresh
+  ```
+  Then re-run `./deploy.sh` or `./update-secrets.sh`. The deploy script now runs `terraform refresh` after apply and checks for outputs before continuing.
+
+### Terraform: "You are not authorized" (e.g. ec2:DescribeVpcs)
+
+- **Cause:** The IAM user used by `aws configure` lacks permissions. Terraform needs EC2 (VPC, subnets), ECR, S3, RDS, ECS, ELB, IAM, Secrets Manager, CloudWatch Logs, etc.
+- **Fix:** An account admin must add permissions. Two options:
+  - **Custom policy (recommended):** In **IAM → Users → [your user] → Add permissions → Create inline policy → JSON**, paste the contents of **`infra/iam-policy-terraform-deploy.json`** from this repo. Name it e.g. **ScholarvalleyTerraformDeploy**. Save and run `./deploy.sh` again.
+  - **Dev only:** Attach the managed policy **AdministratorAccess** to your user.
+  The deploy script checks for `ec2:DescribeVpcs` before running Terraform and will print these instructions if permissions are missing.
+
 ---
 
 ## 6. Git
@@ -111,7 +131,12 @@ Use this guide when something fails. **Environment: macOS (MacBook), Terminal/zs
 ### "origin does not appear to be a git repository"
 
 - **Cause:** No remote named `origin`.
-- **Fix:** Create a repo on GitHub/GitLab, then: `git remote add origin <repo-url>`, then `git push -u origin main`.
+- **Fix:** Create a repo on GitHub (e.g. under username **scholarvalley**), then add remote and push. Canonical URL: `https://github.com/scholarvalley/Scholarvalley_Operating_System.git`
+  ```bash
+  git remote add origin https://github.com/scholarvalley/Scholarvalley_Operating_System.git
+  git push -u origin main
+  ```
+  SSH: `git remote add origin git@github.com:scholarvalley/Scholarvalley_Operating_System.git`
 
 ---
 

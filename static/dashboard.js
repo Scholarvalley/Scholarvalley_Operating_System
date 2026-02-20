@@ -12,7 +12,9 @@
       try {
         var data = text ? JSON.parse(text) : {};
         if (!r.ok) {
-          var msg = [data.detail, data.error, data.message, text].filter(Boolean)[0];
+          var msg = data.detail;
+          if (Array.isArray(msg)) msg = msg.map(function (d) { return typeof d === "string" ? d : (d.msg || (d.loc && d.loc.join(".")) || JSON.stringify(d)); }).join("; ");
+          if (!msg) msg = data.error || data.message || text;
           throw new Error((msg || "Request failed").toString());
         }
         return data;
@@ -48,18 +50,21 @@
     return isNaN(date.getTime()) ? d : date.toLocaleDateString();
   }
 
-  logoutBtn.addEventListener("click", function () {
-    clearToken();
-    window.location.href = "/";
-  });
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+      clearToken();
+      window.location.href = "/";
+    });
+  }
 
   var token = getToken();
   if (!token) {
+    if (statusEl) statusEl.textContent = "Redirecting to login…";
     window.location.href = "/login?next=/dashboard";
     throw new Error("redirect");
   }
 
-  setStatus("Loading applicants…", false);
+  if (statusEl) statusEl.textContent = "Loading applicants…";
 
   fetch("/api/applicants/", {
     headers: { "Authorization": "Bearer " + token }
@@ -72,20 +77,24 @@
       }
       return parseJson(r);
     })
-    .then(function (list) {
-      setStatus("", false);
-      if (!list || list.length === 0) {
-        noApplicants.style.display = "block";
-        tableWrap.style.display = "none";
+    .then(function (data) {
+      if (statusEl) {
+        statusEl.textContent = "";
+        statusEl.className = "form-status";
+      }
+      var list = Array.isArray(data) ? data : (data && data.items ? data.items : []);
+      if (!list.length) {
+        if (noApplicants) noApplicants.style.display = "block";
+        if (tableWrap) tableWrap.style.display = "none";
         return;
       }
-      noApplicants.style.display = "none";
-      tableWrap.style.display = "block";
+      if (noApplicants) noApplicants.style.display = "none";
+      if (tableWrap) tableWrap.style.display = "block";
 
       var showOwner = list.some(function (a) { return a.owner_email != null; });
-      if (showOwner) thOwner.style.display = "";
+      if (thOwner) thOwner.style.display = showOwner ? "" : "none";
 
-      tbody.innerHTML = "";
+      if (tbody) tbody.innerHTML = "";
       list.forEach(function (a) {
         var tr = document.createElement("tr");
         tr.innerHTML =
@@ -96,11 +105,14 @@
           "<td><span class=\"status-badge status-" + (a.status || "").toLowerCase() + "\">" + (a.status || "") + "</span></td>" +
           "<td>" + formatDate(a.created_at) + "</td>" +
           (showOwner ? "<td>" + (a.owner_email || "—") + "</td>" : "");
-        tbody.appendChild(tr);
+        if (tbody) tbody.appendChild(tr);
       });
     })
     .catch(function (err) {
       if (err.message === "redirect" || err.message === "Session expired") return;
-      setStatus(err.message || "Failed to load applicants.", true);
+      if (statusEl) {
+        statusEl.textContent = err.message || "Failed to load applicants.";
+        statusEl.className = "form-status error";
+      }
     });
 })();

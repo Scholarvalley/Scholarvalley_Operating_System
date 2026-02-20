@@ -9,7 +9,9 @@
       try {
         var data = text ? JSON.parse(text) : {};
         if (!r.ok) {
-          var msg = [data.detail, data.error, data.message, text].filter(Boolean)[0];
+          var msg = data.detail;
+          if (Array.isArray(msg)) msg = msg.map(function (d) { return typeof d === "string" ? d : (d.msg || (d.loc && d.loc.join(".")) || JSON.stringify(d)); }).join("; ");
+          if (!msg) msg = data.error || data.message || text;
           throw new Error((msg || "Request failed").toString());
         }
         return data;
@@ -102,6 +104,8 @@
         });
       });
   }
+
+  if (!form || !submitBtn || !statusEl) return;
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();

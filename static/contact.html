@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <header class="site-header">
+<body class="bg-image">
+  <header class="site-header header-bg">
     <div class="header-inner">
       <a href="/" class="logo">
         <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
@@ -33,11 +33,50 @@
   </header>
 
   <main class="page-main">
+    <div class="page-banner page-banner--contact" aria-hidden="true">
+      <h1>Contact Us</h1>
+    </div>
     <section class="section section-page section-contact">
       <div class="container">
         <h1>Contact Us</h1>
-        <p class="about-lead">Replace this with the exact text from your archive Contact page.</p>
-        <p>Copy address, phone, email, contact form labels, and any map or background image instructions. Save contact-page images into <code>static/assets/</code>.</p>
+        <p class="about-lead"><strong>Future candidates:</strong> If you have any question or would like to request additional information about our services please feel free to</p>
+        
+        <div class="contact-info">
+          <p><strong>Email us at:</strong></p>
+          <p><a href="mailto:support@scholarvalley.com">support@scholarvalley.com</a></p>
+          
+          <p><strong>Or call us on:</strong></p>
+          <p><a href="tel:+18599161786">+1 859 916 1786</a></p>
+        </div>
+        
+        <h2>Personal Profile</h2>
+        <form id="contact-form" class="register-form" novalidate>
+          <div class="form-row">
+            <label for="contact_name">Name <span class="required">*</span></label>
+            <input type="text" id="contact_name" name="name" required autocomplete="name">
+            <span class="form-error" id="err_contact_name" aria-live="polite"></span>
+          </div>
+          
+          <div class="form-row">
+            <label for="contact_email">Email <span class="required">*</span></label>
+            <input type="email" id="contact_email" name="email" required autocomplete="email">
+            <span class="form-error" id="err_contact_email" aria-live="polite"></span>
+          </div>
+          
+          <div class="form-row">
+            <label for="contact_message">Message <span class="required">*</span></label>
+            <textarea id="contact_message" name="message" rows="5" required></textarea>
+            <span class="form-error" id="err_contact_message" aria-live="polite"></span>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="contact-submit-btn">Send Message</button>
+          </div>
+          
+          <p id="contact-status" class="form-status" aria-live="polite"></p>
+        </form>
+        
+        <p class="contact-note">Location differs depending upon services. Please contact us for location clarifications.</p>
       </div>
     </section>
   </main>
@@ -49,5 +88,6 @@
   </footer>
 
   <script src="/static/main.js"></script>
+  <script src="/static/contact.js"></script>
 </body>
 </html>

@@ -8,6 +8,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd "$SCRIPT_DIR"
 
+# Ensure we have outputs (refresh if state exists but outputs empty)
+terraform refresh -input=false 2>/dev/null || true
+
 # Get Terraform outputs
 SECRET_NAME=$(terraform output -raw secrets_manager_secret_name 2>/dev/null || echo "")
 RDS_ENDPOINT=$(terraform output -raw rds_endpoint 2>/dev/null || echo "")
@@ -16,7 +19,9 @@ DB_USERNAME="scholarvalley"
 
 if [ -z "$SECRET_NAME" ]; then
     echo "❌ Error: Could not get secret name from Terraform outputs"
-    echo "   Make sure Terraform has been applied: terraform apply"
+    echo "   State may have no outputs. Run a full apply first:"
+    echo "   cd $SCRIPT_DIR && terraform apply -var=\"db_password=YOUR_PASSWORD\""
+    echo "   Then run: terraform refresh"
     exit 1
 fi
 
@@ -85,5 +90,7 @@ aws secretsmanager create-secret \
 
 echo "✅ Secret updated successfully!"
 echo ""
+CLUSTER_NAME=$(terraform output -raw cluster_name 2>/dev/null || echo "scholarvalley-dev")
+SERVICE_NAME=$(terraform output -raw service_name 2>/dev/null || echo "scholarvalley-dev")
 echo "Next: Force ECS service to redeploy with new secrets:"
-echo "  aws ecs update-service --cluster $(terraform output -raw cluster_name) --service $(terraform output -raw service_name) --force-new-deployment"
+echo "  aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment"

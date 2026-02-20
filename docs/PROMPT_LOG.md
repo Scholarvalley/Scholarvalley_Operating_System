@@ -19,6 +19,42 @@
 
 ### 2025-02 (current session)
 
+- **Prompt:** "this is the services page please update: https://web.archive.org/web/20171202170317/http://www.scholarvalley.com/services"
+- **Intent:** Replace placeholder Services page content with the real content from the 2017 archive (document review pricing, application process, scholarship notification, support email).
+
+- **Prompt:** "this the about page please update: https://web.archive.org/web/20171202165626/http://www.scholarvalley.com/about-us"
+- **Intent:** Replace placeholder About page content with the real content from the 2017 archive (Scholarvalley mission, guarantees, headquarters, services, mission statement).
+
+- **Prompt:** "lets test each page based on previous prompt and ensure functionality. keep editing until everything is fixed. ensure all pages are functional"
+- **Intent:** Test every frontend page, fix issues, make all pages functional. Changes: About, Services, Contact – real copy and links; register/login/dashboard JS – parseJson handles array detail (FastAPI validation), login redirect from ?next=, dashboard null guards and array/list response handling; register/login form guards; services-list CSS; validate_archive_pages includes register, login, dashboard. All 7 pages pass structure validation.
+
+- **Prompt:** "fix following and redeploy" – Terraform error: state file has no outputs defined or all defined outputs are empty.
+- **Intent:** Fix empty Terraform outputs and redeploy. Changes: deploy.sh runs `terraform refresh` after apply and checks for outputs before reading them; update-secrets.sh runs refresh and uses variables for cluster/service in final echo; TROUBLESHOOTING.md updated.
+
+- **Prompt:** "same issue can you continue to attempt deployment until resolved"
+- **Intent:** User still has IAM 403 (ec2:DescribeVpcs); wants deployment attempted until it works. Resolution requires an admin to attach the provided IAM policy; added policy JSON and deploy script.
+
+- **Prompt:** User hit Terraform error: Thibaut_A not authorized for ec2:DescribeVpcs (403 UnauthorizedOperation) on data.aws_vpc.default.
+- **Intent:** Fix AWS IAM permissions so Terraform can run (EC2 and other services).
+
+- **Prompt:** "next step for deployment"
+- **Intent:** User wants the next step(s) to deploy the application (AWS deployment).
+
+- **Prompt:** "this link is correct for git: https://github.com/scholarvalley/Scholarvalley_Operating_System.git update docs and code"
+- **Intent:** Use this exact Git URL everywhere in docs and code (lowercase scholarvalley).
+
+- **Prompt:** "what is the next step ?"
+- **Intent:** User wants the recommended next action(s) after successful GitHub push.
+
+- **Prompt:** Push was successful; "lets not change anything."
+- **Intent:** Push succeeded. User later confirmed the **correct** Git URL is `https://github.com/scholarvalley/Scholarvalley_Operating_System.git` (lowercase); docs and code updated to use this URL everywhere.
+
+- **Prompt:** "lets create a new repo and push git" (after "Repository not found" for scholarvalley/Scholarvalley_Operating_System)
+- **Intent:** Create the GitHub repository (it doesn’t exist yet), then push the local project to it.
+
+- **Prompt:** "username is scholarvalley please update for git"
+- **Intent:** Use GitHub username **scholarvalley** in Git remote URLs and any docs/examples (replace YOUR_USERNAME with scholarvalley).
+
 - **Prompt:** "now lets commit and push the complete project to git"
 - **Intent:** Commit all current changes and push the full project to the remote (GitHub). Ensure nothing is left uncommitted.
 
@@ -79,5 +115,6 @@
 ## Persistent constraints (from prompts)
 
 - **macOS:** All commands, paths, and tooling assume **MacBook, Terminal, zsh, Homebrew, Docker Desktop**. No Windows or Linux-specific defaults unless explicitly requested.
+- **GitHub:** Canonical Git URL: `https://github.com/scholarvalley/Scholarvalley_Operating_System.git`. Username **scholarvalley** for all remote URLs and repo references.
 - **AWS-only:** Prefer **only AWS services** (compute, DB, storage, secrets, etc.). **Database:** use **DynamoDB** or another AWS-native data store as the target; current implementation still uses RDS PostgreSQL until migration is done.
 - **Documentation:** Maintain CODEBASE_CONTEXT.md, CHANGELOG.md, TROUBLESHOOTING.md, DEVELOPER_SETUP.md, ONBOARDING.md, PROMPT_LOG.md; **update all logs with new prompts** (PROMPT_LOG + CHANGELOG + any other logs); reference prompt log when making changes.
