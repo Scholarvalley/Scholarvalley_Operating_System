@@ -19,6 +19,9 @@
 
 ### 2025-02 (current session)
 
+- **Prompt:** "on the home page use body3-bg as the first and main background picture..." (home layout and blog setup)
+- **Intent:** Refresh home page backgrounds and add a basic blog. Changes: home hero now uses `body3-bg` full-bleed; audience section sits on a solid black background; Document Review signup section uses `body2-bg` as a fixed background so the signup content scrolls over a static image; "Latest from the Blog" section matches the audience background and links to a new `/blog` page; a simple Blog page was added with cards for opportunities and deadlines; navigation on all pages now includes a Blog link; logs (CHANGELOG, PROMPT_LOG) updated.
+
 - **Prompt:** "can you check change logs did we loose anything when restarting the system?"
 - **Intent:** Verify nothing was lost after Docker/system restart. Result: Git history intact (commits for black theme, assets/tests/Docker fixes present). CHANGELOG and PROMPT_LOG had not been updated for this session’s work; missing entries were added to CHANGELOG (black theme, home archive layout, assets, pytest, Docker fixes, static cache, frontend tests).
 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog – Scholarvalley</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-image">
+  <header class="site-header header-bg">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/blog" class="nav-active">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="page-banner page-banner--blog">
+      <h1>Scholarvalley Blog</h1>
+    </div>
+    <section class="section section-page section-blog">
+      <div class="container">
+        <p class="about-lead">Stay informed about scholarships, application timelines, and new opportunities for your education journey.</p>
+
+        <div class="blog-list">
+          <article class="blog-post">
+            <h3>Merit Scholarships for Upcoming Intakes</h3>
+            <p class="blog-meta">Category: Scholarships &bull; Last updated: Feb 2026</p>
+            <p>Use this space to describe a current opportunity or announcement (for example: merit scholarships available for Fall 2026, eligibility criteria, and how Scholarvalley can help).</p>
+            <p><a href="#!" aria-label="Placeholder link for more details">Add link to full details or PDF</a></p>
+          </article>
+
+          <article class="blog-post">
+            <h3>Upcoming Deadlines for Prospective Freshmen</h3>
+            <p class="blog-meta">Category: Timeline &bull; Last updated: Feb 2026</p>
+            <p>Track important dates for document review, university applications, and scholarship submissions so you never miss a deadline.</p>
+          </article>
+
+          <article class="blog-post">
+            <h3>Graduate Student Funding Opportunities</h3>
+            <p class="blog-meta">Category: Graduate &bull; Last updated: Feb 2026</p>
+            <p>Highlight new assistantships, fellowships, or tuition discounts available to graduate students in the United States and Canada.</p>
+          </article>
+        </div>
+
+        <p class="contact-note">To add a new post, duplicate one of the cards above and update the title, text, and date.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>
+

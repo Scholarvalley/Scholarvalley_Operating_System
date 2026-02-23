@@ -43,14 +43,14 @@ body.bg-image {
   background-color: var(--color-off-white);
 }
 
-/* Optional: hero background from archive (add class "bg-image" to .hero).
-   Main page should only use body-bg + body2-bg images. */
+/* Hero background (body3-bg) – main home hero uses full-cover image */
 .hero.bg-image {
-  background-image: url("/static/assets/body2-bg.jpg");
+  background-image: url("/static/assets/body3-bg.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-color: #0d0d0d;
+  min-height: calc(100vh - var(--header-height));
 }
 
 .hero.bg-image .hero-inner {
@@ -104,6 +104,10 @@ body.bg-image {
   align-items: flex-end;
   padding-bottom: 2.5rem;
   background-position: center top;
+}
+
+.page-banner--blog {
+  background-image: url("/static/assets/body2-bg.jpg");
 }
 
 .page-banner--contact {
@@ -218,13 +222,21 @@ body.bg-image {
 
 .logo {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-white);
   text-decoration: none;
   letter-spacing: 0.02em;
   display: inline-flex;
   align-items: center;
+  gap: 0.5rem;
+  background-image: url("/static/assets/header-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-color: #0d0d0d;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  margin: 0 -0.75rem 0 0;
 }
 
 .logo:hover {
@@ -233,13 +245,14 @@ body.bg-image {
 
 .logo .logo-img {
   display: block;
-  max-height: 48px;
+  max-height: 40px;
   width: auto;
   vertical-align: middle;
 }
 
 .logo .logo-text {
-  display: none;
+  display: inline;
+  white-space: nowrap;
 }
 
 .logo .logo-img[style*="display: none"] + .logo-text {
@@ -474,11 +487,78 @@ body.bg-image {
   margin: 0 0 0.75rem;
 }
 
-/* Home page (2017 archive layout) – only body-bg + body2-bg */
-.section-home-audience,
-.section-home-cta,
+.section-blog {
+  background: var(--color-off-white);
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.blog-post {
+  padding: 1.5rem 1.75rem;
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid #e2e8f0;
+}
+
+.blog-post h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.blog-post p {
+  margin: 0 0 0.75rem;
+  color: var(--color-text);
+}
+
+.blog-post a {
+  color: var(--color-navy-light);
+  text-decoration: underline;
+}
+
+.blog-post a:hover {
+  color: var(--color-gold);
+}
+
+/* Home page (2017 archive layout) – hero on body3-bg, sections on solid/overlay backgrounds */
+.section-home-audience {
+  background: #000;
+}
+
+.section-home-cta {
+  position: relative;
+  color: var(--color-white);
+  background-image: url("/static/assets/body2-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.section-home-cta .container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 3rem 1.5rem;
+  border-radius: 8px;
+}
+
 .section-home-blog {
-  background: transparent;
+  background: #000;
 }
 
 .home-audience-grid {
@@ -521,19 +601,23 @@ body.bg-image {
   text-align: center;
 }
 
+.section-home-blog h2 {
+  color: var(--color-white);
+}
+
 .section-home-blog .home-blog-intro {
   text-align: center;
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-white);
 }
 
 .section-home-blog .home-blog-intro a {
-  color: var(--color-navy-light);
+  color: var(--color-gold-light);
   text-decoration: underline;
 }
 
 .section-home-blog .home-blog-intro a:hover {
-  color: var(--color-gold);
+  color: var(--color-white);
 }
 
 /* Home footer (Quick Links, Free evaluation, Contact, Mission) */

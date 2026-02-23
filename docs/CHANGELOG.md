@@ -6,6 +6,11 @@ All notable changes to the project are logged here. Format: newest first.
 
 ## [Unreleased]
 
+- **Frontend:** Home hero updated to use `body3-bg` as a full-bleed background image (full viewport height) for the main welcome section.
+- **Frontend:** Home audience section (Prospective Freshman, Continuing Undergraduate, Graduate Student) now sits on a solid black background with no image behind the three cards.
+- **Frontend:** Document Review signup/“CLICK HERE” section uses `body2-bg` as a fixed background so the signup content scrolls over a static image.
+- **Frontend:** "Latest from the Blog" and subsequent home sections now share a coherent dark theme to match the audience section.
+- **Frontend:** New `Blog` page (`/blog`) with cards for scholarship opportunities and updates; navigation updated on all pages to include Blog; home "Latest from the Blog" links to the new page.
 - **Frontend:** Black theme applied: header, footer, hero, and body use dark background (`body-bg`, `body2-bg`) with white text; single title per page (banner only; duplicate h1s removed).
 - **Frontend:** Home page aligned with 2017 archive: Welcome hero, three audience cards (Students, Parents, Counselors), Document Review CTA, footer; Register page uses `register-bg`; page-specific hero/background images where applicable.
 - **Frontend:** Asset placeholders added for `static/images/` (logo.png, hero-bg.jpg, about-bg.jpg, register-bg.jpg, etc.); large assets in `.gitignore`; repo pushed after removing large files from tracking.

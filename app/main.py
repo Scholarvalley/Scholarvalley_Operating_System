@@ -97,6 +97,11 @@ async def frontend_services():
     return _send_static_html("services") or FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/blog", include_in_schema=False)
+async def frontend_blog():
+    return _send_static_html("blog") or FileResponse(STATIC_DIR / "index.html")
+
+
 @app.get("/contact", include_in_schema=False)
 async def frontend_contact():
     return _send_static_html("contact") or FileResponse(STATIC_DIR / "index.html")
