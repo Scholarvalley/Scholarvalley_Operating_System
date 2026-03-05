@@ -68,6 +68,18 @@ resource "aws_s3_bucket_public_access_block" "app" {
   restrict_public_buckets = true
 }
 
+# CORS – required for browser presigned PUT (e.g. registration document upload)
+resource "aws_s3_bucket_cors_configuration" "app" {
+  bucket = aws_s3_bucket.app.id
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "PUT", "HEAD"]
+    allowed_origins = ["http://localhost:8000", "https://localhost:8000"]
+    expose_headers  = []
+  }
+}
+
 # ECR – container registry
 resource "aws_ecr_repository" "app" {
   name                 = var.project

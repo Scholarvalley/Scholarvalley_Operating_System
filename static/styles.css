@@ -115,15 +115,40 @@ body.bg-image {
 }
 
 .page-banner--auth {
-  background-image: url("/static/assets/body2-bg.jpg");
+  background-image: url("/static/assets/hero-bg.jpg");
+}
+
+/* Sign in page: larger top banner, black background below (no second image) */
+.page-auth {
+  background: #0d0d0d;
+  background-image: none;
+}
+
+.page-auth .page-banner--auth {
+  min-height: 50vh;
+  background-size: cover;
+  background-position: center;
+  width: 75%;
+  max-width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.page-auth .section-auth-choice {
+  background: #0d0d0d;
+}
+
+.page-auth .section-auth-choice .about-lead {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .page-banner--register {
-  background-image: url("/static/assets/register-bg.jpg");
+  background-image: url("/static/assets/hero-bg.jpg");
 }
 
 .page-banner--dashboard {
-  background-image: url("/static/assets/about-bg.jpg");
+  background-image: url("/static/assets/register-bg.jpg");
 }
 
 .page-banner h1 {
@@ -245,14 +270,14 @@ body.bg-image {
 
 .logo .logo-img {
   display: block;
-  max-height: 40px;
+  max-height: 48px;
   width: auto;
   vertical-align: middle;
+  filter: contrast(1.2);
 }
 
 .logo .logo-text {
-  display: inline;
-  white-space: nowrap;
+  display: none;
 }
 
 .logo .logo-img[style*="display: none"] + .logo-text {
@@ -464,6 +489,12 @@ body.bg-image {
   background: var(--color-off-white);
 }
 
+.section-about .about-lead,
+.section-about p,
+.section-about h2 {
+  color: #000;
+}
+
 .about-lead {
   font-size: 1.1rem;
   color: var(--color-text);
@@ -472,7 +503,6 @@ body.bg-image {
 
 .section-about p {
   margin: 0 0 0.75rem;
-  color: var(--color-text-muted);
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
@@ -727,6 +757,97 @@ body.bg-image {
   text-align: center;
 }
 
+/* Register / Login pages – white content area, black text */
+.section-register,
+.section-login {
+  background: #ffffff;
+}
+
+.section-register,
+.section-register p,
+.section-register label,
+.section-register h1,
+.section-register h2,
+.section-register .section-intro,
+.section-login,
+.section-login p,
+.section-login label,
+.section-login h1,
+.section-login h2,
+.section-login .section-intro {
+  color: #000000;
+}
+
+/* Dashboard page – white content area, black text */
+.section-dashboard {
+  background: #ffffff;
+}
+
+.section-dashboard,
+.section-dashboard p,
+.section-dashboard h1,
+.section-dashboard h2,
+.section-dashboard .section-intro {
+  color: #000000;
+}
+
+/* Auth choice (Register vs Log in) */
+.section-auth-choice .about-lead {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.auth-choice-card {
+  display: block;
+  padding: 2rem 1.75rem;
+  background: var(--color-white);
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-choice-card:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 16px rgba(184, 134, 11, 0.2);
+}
+
+.auth-choice-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 0 0 0.75rem;
+  text-align: left;
+}
+
+.auth-choice-card p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.auth-choice-cta {
+  font-weight: 600;
+  color: var(--color-gold);
+  font-size: 0.95rem;
+}
+
+.auth-choice-card:hover .auth-choice-cta {
+  color: var(--color-gold-light);
+}
+
 /* Register form */
 .section-register .section-intro {
   text-align: center;
@@ -893,6 +1014,26 @@ body.bg-image {
   color: var(--color-navy-light);
   text-decoration: underline;
 }
+
+.applicants-table tbody td a {
+  color: var(--color-navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+.applicants-table tbody td a:hover {
+  text-decoration: underline;
+  color: var(--color-gold);
+}
+
+.profile-card {
+  padding: 1.5rem;
+  background: var(--color-off-white);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #e2e8f0;
+}
+.profile-card h2 { margin: 0 0 0.5rem; }
+.profile-meta { margin: 0 0 0.5rem; color: var(--color-text-muted); }
 
 .btn-logout {
   margin-left: 0.5rem;

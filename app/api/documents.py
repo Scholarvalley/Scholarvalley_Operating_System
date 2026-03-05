@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import List
+
 from uuid import uuid4
 
 import boto3
@@ -27,8 +29,10 @@ def _check_bundle_access(session: Session, bundle_id: int, user: User) -> Docume
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Bundle not found")
     from app.models.applicant import Applicant
     applicant = session.get(Applicant, bundle.applicant_id)
-    if not applicant or applicant.account_user_id != user.id:
+    if not applicant:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Bundle not found")
+    if user.role == "client" and applicant.account_user_id != user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
     return bundle
 
 
@@ -134,3 +138,35 @@ def complete_document_upload(
     )
 
     return {"status": "ok", "document_id": doc.id}
+
+
+class DocumentListEntry(BaseModel):
+    id: int
+    filename: str
+    content_type: str
+    scanned_status: str
+    created_at: str
+
+    class Config:
+        from_attributes = True
+
+
+@router.get("/bundles/{bundle_id}/documents", response_model=List[DocumentListEntry])
+def list_bundle_documents(
+    bundle_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """List documents in a bundle. Owner or manager/root can access."""
+    bundle = _check_bundle_access(session, bundle_id, current_user)
+    docs = session.exec(select(Document).where(Document.bundle_id == bundle_id).order_by(Document.created_at)).all()
+    return [
+        DocumentListEntry(
+            id=d.id,
+            filename=d.filename,
+            content_type=d.content_type,
+            scanned_status=d.scanned_status,
+            created_at=d.created_at.isoformat() if d.created_at else "",
+        )
+        for d in docs
+    ]

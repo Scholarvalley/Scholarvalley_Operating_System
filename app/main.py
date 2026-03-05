@@ -8,6 +8,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api import auth, applicants, dashboard, documents, eligibility, messages, ml, payments, tasks, uploads
 from app.core.config import get_settings
+from app.db.session import init_db
 
 
 settings = get_settings()
@@ -20,6 +21,8 @@ def _internal_error_detail(exc: Exception) -> str:
         return "Database connection failed. Check that PostgreSQL is running and DATABASE_URL is correct."
     if "password" in msg.lower() or "auth" in msg.lower():
         return "Database authentication failed. Check DATABASE_URL credentials."
+    if "does not exist" in msg or "relation" in msg.lower():
+        return "Database table missing. Restart the API so tables can be created, or run: docker compose exec api alembic upgrade head"
     return msg[:200]
 
 # Project root (parent of app/)
@@ -30,6 +33,15 @@ app = FastAPI(
     title="ScholarValley Operating System API",
     version="0.1.0",
 )
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    """Ensure database tables exist (e.g. after fresh DB)."""
+    try:
+        init_db()
+    except Exception:
+        pass  # If DB not ready or migrations used, continue anyway
 
 allowed_origins = ["*"]
 if settings.frontend_origin:
@@ -107,6 +119,11 @@ async def frontend_contact():
     return _send_static_html("contact") or FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/auth", include_in_schema=False)
+async def frontend_auth():
+    return _send_static_html("auth") or FileResponse(STATIC_DIR / "index.html")
+
+
 @app.get("/register", include_in_schema=False)
 async def frontend_register():
     return _send_static_html("register") or FileResponse(STATIC_DIR / "index.html")
@@ -120,6 +137,11 @@ async def frontend_login():
 @app.get("/dashboard", include_in_schema=False)
 async def frontend_dashboard():
     return _send_static_html("dashboard") or FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/profile/{applicant_id:int}", include_in_schema=False)
+async def frontend_profile(applicant_id: int):
+    return _send_static_html("profile") or FileResponse(STATIC_DIR / "index.html")
 
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])

@@ -5,10 +5,11 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlmodel import Session, select
 
-from app.api.auth import get_current_user
+from app.api.auth import get_current_user, require_role
 from app.db.session import get_session
 from app.models.applicant import Applicant
 from app.models.document import DocumentBundle
+from app.models.review import ApplicantReview
 from app.models.user import User
 from app.schemas.applicant import (
     ApplicantCreate,
@@ -16,6 +17,7 @@ from app.schemas.applicant import (
     ApplicantListEntry,
     ApplicantRead,
 )
+from app.schemas.review import ReviewCreate, ReviewRead
 
 
 router = APIRouter()
@@ -109,13 +111,56 @@ def get_applicant_bundle(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
-    """Return the first (registration) bundle for an applicant owned by current user."""
+    """Return the first (registration) bundle for an applicant. Clients only own; manager/root see any."""
     applicant = session.get(Applicant, applicant_id)
-    if not applicant or applicant.account_user_id != current_user.id:
+    if not applicant:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Applicant not found")
+    if current_user.role == "client" and applicant.account_user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
     bundle = session.exec(
         select(DocumentBundle).where(DocumentBundle.applicant_id == applicant_id)
     ).first()
     if not bundle:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No bundle found")
     return {"applicant_id": applicant_id, "bundle_id": bundle.id}
+
+
+@router.post("/{applicant_id}/review", response_model=ReviewRead)
+def submit_applicant_review(
+    applicant_id: int,
+    payload: ReviewCreate,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(require_role("manager", "root")),
+):
+    """Submit a review (positive/negative + optional feedback) for an applicant. Manager/root only."""
+    applicant = session.get(Applicant, applicant_id)
+    if not applicant:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Applicant not found")
+    review = ApplicantReview(
+        applicant_id=applicant_id,
+        reviewer_user_id=current_user.id,
+        positive=payload.positive,
+        feedback=payload.feedback,
+    )
+    session.add(review)
+    session.commit()
+    session.refresh(review)
+    return review
+
+
+@router.get("/{applicant_id}/reviews", response_model=List[ReviewRead])
+def list_applicant_reviews(
+    applicant_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """List reviews for an applicant. Caller must be able to access the applicant."""
+    applicant = session.get(Applicant, applicant_id)
+    if not applicant:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Applicant not found")
+    if current_user.role == "client" and applicant.account_user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
+    reviews = session.exec(
+        select(ApplicantReview).where(ApplicantReview.applicant_id == applicant_id).order_by(ApplicantReview.created_at.desc())
+    ).all()
+    return list(reviews)

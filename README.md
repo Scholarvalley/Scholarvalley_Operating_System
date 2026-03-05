@@ -75,9 +75,9 @@ Edit `.env`. **Required** for the app to start:
 
 - `DATABASE_URL` – e.g. `postgresql+psycopg2://user:password@localhost:5432/scholar` (use `postgresql+psycopg2://` when using psycopg2)
 - `JWT_SECRET_KEY` – any non-empty string (use a strong secret in production)
-- `AWS_S3_BUCKET` – bucket name (can be a placeholder for local dev if you don’t call S3 yet)
+- `AWS_S3_BUCKET` – S3 bucket name for document uploads (transcript, degree). For full setup (bucket, IAM, CORS), see **`docs/AWS_S3_SETUP.md`**. Without S3, registration still works but file upload is skipped.
 
-Optional: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SES_FROM_EMAIL`, `FRONTEND_ORIGIN`.
+Optional: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` (for local/Docker when using S3); `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SES_FROM_EMAIL`, `FRONTEND_ORIGIN`.
 
 ### 3. Database
 

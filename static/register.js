@@ -30,7 +30,7 @@
   }
 
   function clearErrors() {
-    ["first_name", "surname", "email", "confirm_email", "password", "latest_education", "transcript", "degree"].forEach(function (id) {
+    ["first_name", "surname", "email", "confirm_email", "password", "service_interest", "latest_education", "transcript", "degree"].forEach(function (id) {
       showError(id, "");
     });
     statusEl.textContent = "";
@@ -53,6 +53,7 @@
     var email = getValue("email");
     var confirmEmail = getValue("confirm_email");
     var password = getValue("password");
+    var service = getValue("service_interest");
     var education = getValue("latest_education");
     var transcript = document.getElementById("transcript");
     var degree = document.getElementById("degree");
@@ -64,14 +65,17 @@
     if (!confirmEmail) { showError("confirm_email", "Please confirm your email."); valid = false; } else showError("confirm_email", "");
     if (email !== confirmEmail) { showError("confirm_email", "Emails do not match."); valid = false; }
     if (!password) { showError("password", "Password is required."); valid = false; } else if (password.length < 8) { showError("password", "Password must be at least 8 characters."); valid = false; } else showError("password", "");
+    if (!service) { showError("service_interest", "Please select a service."); valid = false; } else showError("service_interest", "");
     if (!education) { showError("latest_education", "Latest education is required."); valid = false; } else showError("latest_education", "");
-    if (!transcript || !transcript.files || !transcript.files[0]) { showError("transcript", "Please upload your transcript."); valid = false; } else showError("transcript", "");
-    if (!degree || !degree.files || !degree.files[0]) { showError("degree", "Please upload your latest degree."); valid = false; } else showError("degree", "");
+    /* Transcript and degree are optional; upload may be unavailable without S3. */
+    if (transcript) showError("transcript", "");
+    if (degree) showError("degree", "");
 
     return valid;
   }
 
   function uploadDocument(token, bundleId, file, kind) {
+    if (!file || !file.name) return Promise.resolve();
     var filename = file.name || (kind + ".pdf");
     var contentType = file.type || "application/octet-stream";
     var initiateUrl = API + "/bundles/" + bundleId + "/documents/initiate?filename=" + encodeURIComponent(filename) + "&content_type=" + encodeURIComponent(contentType);
@@ -81,7 +85,11 @@
       headers: { "Authorization": "Bearer " + token }
     })
       .then(function (r) {
-        if (!r.ok) return r.text().then(function () { throw new Error("Failed to start " + kind + " upload."); });
+        if (!r.ok) return r.text().then(function (text) {
+          var msg = "Failed to start " + kind + " upload.";
+          try { var d = JSON.parse(text); if (d.error) msg = d.error; else if (d.detail) msg = typeof d.detail === "string" ? d.detail : msg; } catch (e) {}
+          throw new Error(msg);
+        });
         return parseJson(r);
       })
       .then(function (data) {
@@ -119,6 +127,7 @@
     var surname = getValue("surname");
     var email = getValue("email");
     var password = getValue("password");
+    var service = getValue("service_interest");
     var education = getValue("latest_education");
     var transcriptFile = document.getElementById("transcript").files[0];
     var degreeFile = document.getElementById("degree").files[0];
@@ -158,19 +167,33 @@
           body: JSON.stringify({
             first_name: first,
             last_name: surname,
-            latest_education: education
+            latest_education: education,
+            service_interest: service
           })
         }).then(parseJson).then(function (applicant) {
-          setStatus("Uploading transcript…", false);
-          return uploadDocument(token, applicant.bundle_id, transcriptFile, "transcript")
-            .then(function () {
-              setStatus("Uploading degree…", false);
-              return uploadDocument(token, applicant.bundle_id, degreeFile, "degree");
-            })
-            .then(function () {
-              setStatus("Registration complete. You can now log in on the API docs or your client.", false);
-              submitBtn.disabled = false;
+          var uploadDone = Promise.resolve();
+          if (transcriptFile && transcriptFile.size > 0) {
+            setStatus("Uploading transcript…", false);
+            uploadDone = uploadDone.then(function () {
+              return uploadDocument(token, applicant.bundle_id, transcriptFile, "transcript").catch(function (err) {
+                console.warn("Transcript upload failed:", err);
+                return Promise.resolve();
+              });
             });
+          }
+          if (degreeFile && degreeFile.size > 0) {
+            uploadDone = uploadDone.then(function () {
+              setStatus("Uploading degree…", false);
+              return uploadDocument(token, applicant.bundle_id, degreeFile, "degree").catch(function (err) {
+                console.warn("Degree upload failed:", err);
+                return Promise.resolve();
+              });
+            });
+          }
+          return uploadDone.then(function () {
+            setStatus("Registration complete. You can sign in or upload documents later from your dashboard.", false);
+            submitBtn.disabled = false;
+          });
         });
       })
       .catch(function (err) {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-image">
+<body>
   <header class="site-header header-bg">
     <div class="header-inner">
       <a href="/" class="logo">
@@ -22,8 +22,7 @@
         <a href="/blog">Blog</a>
         <a href="/about">About</a>
         <a href="/contact">Contact</a>
-        <a href="/register" class="nav-active">Register</a>
-        <a href="/login">Login</a>
+        <a href="/auth" class="nav-active">Sign in</a>
         <a href="/dashboard">Dashboard</a>
         <a href="/docs" class="nav-api">API Docs</a>
       </nav>
@@ -71,6 +70,17 @@
             <input type="password" id="password" name="password" required autocomplete="new-password" minlength="8">
             <span class="form-error" id="err_password" aria-live="polite"></span>
             <small class="form-hint">At least 8 characters.</small>
+          </div>
+
+          <div class="form-row">
+            <label for="service_interest">Service of interest <span class="required">*</span></label>
+            <select id="service_interest" name="service_interest" required>
+              <option value="">Please select</option>
+              <option value="Document Review">Document Review</option>
+              <option value="Application Support">Application Support</option>
+              <option value="Scholarship Support">Scholarship Support</option>
+            </select>
+            <span class="form-error" id="err_service_interest" aria-live="polite"></span>
           </div>
 
           <div class="form-row">

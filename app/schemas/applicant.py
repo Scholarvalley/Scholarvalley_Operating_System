@@ -8,6 +8,7 @@ class ApplicantCreate(BaseModel):
     first_name: str
     last_name: str
     latest_education: Optional[str] = None
+    service_interest: Optional[str] = None
 
 
 class ApplicantRead(BaseModel):

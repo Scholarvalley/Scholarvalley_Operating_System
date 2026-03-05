@@ -1,6 +1,7 @@
 from app.models.user import User
 from app.models.applicant import Applicant
 from app.models.document import Document, DocumentBundle
+from app.models.review import ApplicantReview
 from app.models.task import Task
 from app.models.message import Message
 from app.models.payment import Payment
@@ -13,6 +14,7 @@ __all__ = [
     "Applicant",
     "Document",
     "DocumentBundle",
+    "ApplicantReview",
     "Task",
     "Message",
     "Payment",

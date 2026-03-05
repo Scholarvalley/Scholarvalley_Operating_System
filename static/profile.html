@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile – Scholarvalley</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-image">
+  <header class="site-header header-bg">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/static/assets/logo.png" alt="Scholarvalley" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline';">
+        <span class="logo-text">Scholarvalley</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/services">Services</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/auth">Sign in</a>
+        <a href="/dashboard" class="nav-active">Dashboard</a>
+        <a href="/docs" class="nav-api">API Docs</a>
+        <button type="button" class="btn btn-logout" id="logout-btn">Log out</button>
+      </nav>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="page-banner page-banner--dashboard">
+      <h1>Applicant Profile</h1>
+    </div>
+    <section class="section section-page section-dashboard">
+      <div class="container">
+        <p id="profile-status" class="form-status" aria-live="polite">Loading…</p>
+        <div id="profile-content" style="display: none;">
+          <div class="profile-card">
+            <h2 id="profile-name"></h2>
+            <p id="profile-education" class="profile-meta"></p>
+            <p id="profile-status-badge"></p>
+            <p><a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a></p>
+          </div>
+          <h3>Attached documents</h3>
+          <div id="profile-documents-wrap" class="table-wrap">
+            <table class="applicants-table" id="profile-documents">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="profile-documents-tbody"></tbody>
+            </table>
+          </div>
+          <p id="profile-documents-empty" class="no-data" style="display: none;">No documents in this bundle.</p>
+          <div id="profile-reviews-section" style="margin-top: 2rem;">
+            <h3>Reviews</h3>
+            <div id="profile-reviews-list"></div>
+            <form id="profile-review-form" class="register-form" style="display: none;">
+              <h4>Submit review</h4>
+              <div class="form-row">
+                <label>Rating</label>
+                <div>
+                  <label><input type="radio" name="positive" value="1" checked> Positive</label>
+                  <label><input type="radio" name="positive" value="0"> Negative</label>
+                </div>
+              </div>
+              <div class="form-row">
+                <label for="review-feedback">Feedback (optional)</label>
+                <textarea id="review-feedback" name="feedback" rows="3"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit review</button>
+              </div>
+              <p id="review-form-status" class="form-status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-copy">&copy; Scholarvalley. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/static/main.js"></script>
+  <script src="/static/profile.js"></script>
+</body>
+</html>

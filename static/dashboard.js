@@ -97,8 +97,9 @@
       if (tbody) tbody.innerHTML = "";
       list.forEach(function (a) {
         var tr = document.createElement("tr");
+        var profileLink = "/profile/" + (a.id || "");
         tr.innerHTML =
-          "<td>" + (a.id || "") + "</td>" +
+          "<td><a href=\"" + profileLink + "\">" + (a.id || "") + "</a></td>" +
           "<td>" + (a.first_name || "") + "</td>" +
           "<td>" + (a.last_name || "") + "</td>" +
           "<td>" + (a.latest_education || "—") + "</td>" +

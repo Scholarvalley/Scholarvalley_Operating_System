@@ -6,6 +6,12 @@ Use this guide when something fails. **Environment: macOS (MacBook), Terminal/zs
 
 ## 1. Docker
 
+### Website not coming back up after `compose down` or rebuild
+
+- **Cause:** Containers are stopped. After `docker compose down` or `docker compose build` you must start the stack again.
+- **Fix:** Run `docker compose up -d`. Then open http://localhost:8000. To watch logs: `docker compose up` (no `-d`).
+- **Check:** `docker compose ps` should show `scholarvalley-api` and `scholarvalley-db` as running.
+
 ### "Cannot connect to the Docker daemon" / "Is the docker daemon running?"
 
 - **Cause:** Docker Desktop is not running.
