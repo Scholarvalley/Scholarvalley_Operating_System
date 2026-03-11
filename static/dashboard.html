@@ -41,25 +41,63 @@
       <div class="container">
         <p class="section-intro">View and manage applicant profiles. Clients see their own; managers see all.</p>
 
-        <div id="dashboard-status" class="form-status" aria-live="polite"></div>
-        <div id="applicants-table-wrap" class="table-wrap" style="display: none;">
-          <table class="applicants-table" id="applicants-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Latest education</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th id="th-owner" style="display: none;">Owner email</th>
-              </tr>
-            </thead>
-            <tbody id="applicants-tbody">
-            </tbody>
-          </table>
+        <div class="dashboard-grid">
+          <div class="dashboard-main">
+            <div class="progress-card">
+              <h2>Application progress</h2>
+              <ol class="progress-steps" id="dashboard-progress-steps">
+                <li data-step="1">Documents submitted</li>
+                <li data-step="2">Documents accepted</li>
+                <li data-step="3">In review</li>
+                <li data-step="4">Consultation scheduled</li>
+                <li data-step="5">Application process</li>
+                <li data-step="6">Scholarship assistance</li>
+              </ol>
+            </div>
+
+            <div class="status-card" id="dashboard-status-card">
+              <h2>Application status</h2>
+              <p id="dashboard-status-line">Status: —</p>
+              <p id="dashboard-status-agent">Assigned agent: —</p>
+              <p id="dashboard-status-updated">Last update: —</p>
+            </div>
+
+            <div class="quick-actions">
+              <button type="button" class="btn btn-primary" id="btn-upload-docs">Upload documents</button>
+              <button type="button" class="btn btn-secondary" id="btn-update-profile">Update profile</button>
+              <button type="button" class="btn btn-secondary" id="btn-pay-services">Pay for services</button>
+              <button type="button" class="btn btn-secondary" id="btn-schedule-consultation">Schedule consultation</button>
+              <button type="button" class="btn btn-secondary" id="btn-message-agent">Message agent</button>
+            </div>
+
+            <div id="dashboard-status" class="form-status" aria-live="polite"></div>
+            <div id="applicants-table-wrap" class="table-wrap" style="display: none;">
+              <table class="applicants-table" id="applicants-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Latest education</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th id="th-owner" style="display: none;">Owner email</th>
+                  </tr>
+                </thead>
+                <tbody id="applicants-tbody">
+                </tbody>
+              </table>
+            </div>
+            <p id="no-applicants" class="no-data" style="display: none;">No applicants yet. <a href="/register">Register</a> to create a profile.</p>
+          </div>
+
+          <aside class="dashboard-aside">
+            <h3>Notifications</h3>
+            <ul id="dashboard-notifications" class="notifications-list">
+              <li class="notifications-empty">No notifications yet.</li>
+            </ul>
+          </aside>
         </div>
-        <p id="no-applicants" class="no-data" style="display: none;">No applicants yet. <a href="/register">Register</a> to create a profile.</p>
       </div>
     </section>
   </main>

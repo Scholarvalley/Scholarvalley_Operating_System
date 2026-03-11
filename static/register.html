@@ -66,6 +66,33 @@
           </div>
 
           <div class="form-row">
+            <label for="country_of_residence">Country of residence <span class="required">*</span></label>
+            <input type="text" id="country_of_residence" name="country_of_residence" required placeholder="e.g. Ghana, Nigeria, Kenya" autocomplete="country-name">
+            <span class="form-error" id="err_country_of_residence" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="study_destination">Desired study destination <span class="required">*</span></label>
+            <select id="study_destination" name="study_destination" required>
+              <option value="">Please select</option>
+              <option value="USA">United States of America</option>
+              <option value="Canada">Canada</option>
+            </select>
+            <span class="form-error" id="err_study_destination" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="level_of_study">Level of study <span class="required">*</span></label>
+            <select id="level_of_study" name="level_of_study" required>
+              <option value="">Please select</option>
+              <option value="freshman">Freshman</option>
+              <option value="continuing_undergrad">Continuing Undergraduate</option>
+              <option value="graduate">Graduate Student</option>
+            </select>
+            <span class="form-error" id="err_level_of_study" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
             <label for="password">Password <span class="required">*</span></label>
             <input type="password" id="password" name="password" required autocomplete="new-password" minlength="8">
             <span class="form-error" id="err_password" aria-live="polite"></span>
@@ -87,6 +114,18 @@
             <label for="latest_education">Latest education <span class="required">*</span></label>
             <input type="text" id="latest_education" name="latest_education" required placeholder="e.g. Bachelor of Science, XYZ University" autocomplete="organization-title">
             <span class="form-error" id="err_latest_education" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="annual_budget">Estimated yearly education budget (USD) <span class="required">*</span></label>
+            <input type="text" id="annual_budget" name="annual_budget" required placeholder="e.g. 15000">
+            <span class="form-error" id="err_annual_budget" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="income_source">Describe possible sources of income <span class="required">*</span></label>
+            <textarea id="income_source" name="income_source" rows="3" required placeholder="e.g. family support, savings, sponsorship, loans"></textarea>
+            <span class="form-error" id="err_income_source" aria-live="polite"></span>
           </div>
 
           <div class="form-row">

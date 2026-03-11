@@ -4,6 +4,12 @@
   var contentEl = document.getElementById("profile-content");
   var nameEl = document.getElementById("profile-name");
   var educationEl = document.getElementById("profile-education");
+  var destinationEl = document.getElementById("profile-destination");
+  var levelEl = document.getElementById("profile-level");
+  var countryEl = document.getElementById("profile-country");
+  var budgetEl = document.getElementById("profile-budget");
+  var incomeEl = document.getElementById("profile-income");
+  var serviceEl = document.getElementById("profile-service");
   var statusBadgeEl = document.getElementById("profile-status-badge");
   var documentsTbody = document.getElementById("profile-documents-tbody");
   var documentsEmpty = document.getElementById("profile-documents-empty");
@@ -139,6 +145,12 @@
 
       if (nameEl) nameEl.textContent = (applicant.first_name || "") + " " + (applicant.last_name || "");
       if (educationEl) educationEl.textContent = "Education: " + (applicant.latest_education || "—");
+      if (destinationEl) destinationEl.textContent = "Destination: " + (applicant.study_destination || "—");
+      if (levelEl) levelEl.textContent = "Level of study: " + (applicant.level_of_study || "—");
+      if (countryEl) countryEl.textContent = "Country of residence: " + (applicant.country_of_residence || "—");
+      if (budgetEl) budgetEl.textContent = "Estimated yearly budget: " + (applicant.annual_budget || "—");
+      if (incomeEl) incomeEl.textContent = "Income sources: " + (applicant.income_source || "—");
+      if (serviceEl) serviceEl.textContent = "Service of interest: " + (applicant.service_interest || "—");
       if (statusBadgeEl) statusBadgeEl.innerHTML = "<span class=\"status-badge status-" + (applicant.status || "").toLowerCase() + "\">" + (applicant.status || "") + "</span>";
 
       if (documentsTbody) documentsTbody.innerHTML = "";

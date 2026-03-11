@@ -139,6 +139,21 @@ async def frontend_dashboard():
     return _send_static_html("dashboard") or FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/payments", include_in_schema=False)
+async def frontend_payments():
+    return _send_static_html("payments") or FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/consultations", include_in_schema=False)
+async def frontend_consultations():
+    return _send_static_html("consultations") or FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/messages", include_in_schema=False)
+async def frontend_messages():
+    return _send_static_html("messages") or FileResponse(STATIC_DIR / "index.html")
+
+
 @app.get("/profile/{applicant_id:int}", include_in_schema=False)
 async def frontend_profile(applicant_id: int):
     return _send_static_html("profile") or FileResponse(STATIC_DIR / "index.html")

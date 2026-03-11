@@ -509,6 +509,16 @@ body.bg-image {
   text-align: center;
 }
 
+.section-about .services-list {
+  display: inline-block;
+  text-align: left;
+  margin: 0 auto 0.75rem;
+}
+
+.section-about .services-list li {
+  text-align: left;
+}
+
 .section-contact {
   background: var(--color-white);
 }
@@ -961,6 +971,104 @@ body.bg-image {
 .section-dashboard .section-intro {
   margin-bottom: 1.5rem;
   color: var(--color-text-muted);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dashboard-aside {
+  padding: 1.5rem;
+  background: var(--color-off-white);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.progress-card,
+.status-card,
+.quick-actions {
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.progress-card h2,
+.status-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.progress-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.progress-steps li {
+  flex: 1 1 120px;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  background: #f7fafc;
+}
+
+.progress-steps li.is-complete {
+  background: #276749;
+  border-color: #276749;
+  color: #ffffff;
+}
+
+.progress-steps li.is-current {
+  background: #b8860b;
+  border-color: #b8860b;
+  color: #ffffff;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.notifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notifications-list li {
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.notifications-list li:last-child {
+  border-bottom: none;
+}
+
+.notifications-empty {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .table-wrap {

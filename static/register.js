@@ -30,7 +30,7 @@
   }
 
   function clearErrors() {
-    ["first_name", "surname", "email", "confirm_email", "password", "service_interest", "latest_education", "transcript", "degree"].forEach(function (id) {
+    ["first_name", "surname", "email", "confirm_email", "password", "country_of_residence", "study_destination", "level_of_study", "service_interest", "latest_education", "annual_budget", "income_source", "transcript", "degree"].forEach(function (id) {
       showError(id, "");
     });
     statusEl.textContent = "";
@@ -53,8 +53,13 @@
     var email = getValue("email");
     var confirmEmail = getValue("confirm_email");
     var password = getValue("password");
+    var country = getValue("country_of_residence");
+    var destination = getValue("study_destination");
+    var level = getValue("level_of_study");
     var service = getValue("service_interest");
     var education = getValue("latest_education");
+    var budget = getValue("annual_budget");
+    var income = getValue("income_source");
     var transcript = document.getElementById("transcript");
     var degree = document.getElementById("degree");
 
@@ -65,8 +70,13 @@
     if (!confirmEmail) { showError("confirm_email", "Please confirm your email."); valid = false; } else showError("confirm_email", "");
     if (email !== confirmEmail) { showError("confirm_email", "Emails do not match."); valid = false; }
     if (!password) { showError("password", "Password is required."); valid = false; } else if (password.length < 8) { showError("password", "Password must be at least 8 characters."); valid = false; } else showError("password", "");
+    if (!country) { showError("country_of_residence", "Country of residence is required."); valid = false; } else showError("country_of_residence", "");
+    if (!destination) { showError("study_destination", "Please select a study destination."); valid = false; } else showError("study_destination", "");
+    if (!level) { showError("level_of_study", "Please select a level of study."); valid = false; } else showError("level_of_study", "");
     if (!service) { showError("service_interest", "Please select a service."); valid = false; } else showError("service_interest", "");
     if (!education) { showError("latest_education", "Latest education is required."); valid = false; } else showError("latest_education", "");
+    if (!budget) { showError("annual_budget", "Estimated yearly budget is required."); valid = false; } else showError("annual_budget", "");
+    if (!income) { showError("income_source", "Please describe your sources of income."); valid = false; } else showError("income_source", "");
     /* Transcript and degree are optional; upload may be unavailable without S3. */
     if (transcript) showError("transcript", "");
     if (degree) showError("degree", "");
@@ -128,7 +138,12 @@
     var email = getValue("email");
     var password = getValue("password");
     var service = getValue("service_interest");
+    var country = getValue("country_of_residence");
+    var destination = getValue("study_destination");
+    var level = getValue("level_of_study");
     var education = getValue("latest_education");
+    var budget = getValue("annual_budget");
+    var income = getValue("income_source");
     var transcriptFile = document.getElementById("transcript").files[0];
     var degreeFile = document.getElementById("degree").files[0];
 
@@ -168,7 +183,12 @@
             first_name: first,
             last_name: surname,
             latest_education: education,
-            service_interest: service
+            service_interest: service,
+            country_of_residence: country,
+            study_destination: destination,
+            level_of_study: level,
+            annual_budget: budget,
+            income_source: income
           })
         }).then(parseJson).then(function (applicant) {
           var uploadDone = Promise.resolve();

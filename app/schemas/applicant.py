@@ -9,6 +9,11 @@ class ApplicantCreate(BaseModel):
     last_name: str
     latest_education: Optional[str] = None
     service_interest: Optional[str] = None
+    country_of_residence: Optional[str] = None
+    study_destination: Optional[str] = None
+    level_of_study: Optional[str] = None
+    annual_budget: Optional[str] = None
+    income_source: Optional[str] = None
 
 
 class ApplicantRead(BaseModel):
@@ -17,6 +22,12 @@ class ApplicantRead(BaseModel):
     first_name: str
     last_name: str
     latest_education: Optional[str]
+    service_interest: Optional[str]
+    country_of_residence: Optional[str]
+    study_destination: Optional[str]
+    level_of_study: Optional[str]
+    annual_budget: Optional[str]
+    income_source: Optional[str]
     status: str
     created_at: datetime
 

@@ -23,6 +23,14 @@ class Applicant(SQLModel, table=True):
 
     latest_education: Optional[str] = Field(default=None)  # e.g. "Bachelor of Science, XYZ University"
 
+    # Profile and service interest
+    country_of_residence: Optional[str] = Field(default=None)
+    study_destination: Optional[str] = Field(default=None)  # "USA" or "Canada"
+    level_of_study: Optional[str] = Field(default=None)  # freshman, continuing_undergrad, graduate
+    annual_budget: Optional[str] = Field(default=None)
+    income_source: Optional[str] = Field(default=None)
+    service_interest: Optional[str] = Field(default=None)
+
     status: str = Field(
         default="draft", index=True
     )  # draft, in_review, accepted, rejected, archived

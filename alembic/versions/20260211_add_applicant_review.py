@@ -17,6 +17,13 @@ depends_on = None
 
 
 def upgrade() -> None:
+    """Create applicantreview table if it does not already exist."""
+    bind = op.get_bind()
+    inspector = sa.inspect(bind)
+    if "applicantreview" in inspector.get_table_names():
+        # Table already exists (e.g. from init_db()); treat this migration as applied.
+        return
+
     op.create_table(
         "applicantreview",
         sa.Column("id", sa.Integer(), nullable=False),

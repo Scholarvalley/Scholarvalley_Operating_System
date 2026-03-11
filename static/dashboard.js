@@ -6,6 +6,16 @@
   var noApplicants = document.getElementById("no-applicants");
   var thOwner = document.getElementById("th-owner");
   var logoutBtn = document.getElementById("logout-btn");
+  var progressSteps = document.getElementById("dashboard-progress-steps");
+  var statusLineEl = document.getElementById("dashboard-status-line");
+  var statusAgentEl = document.getElementById("dashboard-status-agent");
+  var statusUpdatedEl = document.getElementById("dashboard-status-updated");
+  var notificationsEl = document.getElementById("dashboard-notifications");
+  var btnUploadDocs = document.getElementById("btn-upload-docs");
+  var btnUpdateProfile = document.getElementById("btn-update-profile");
+  var btnPayServices = document.getElementById("btn-pay-services");
+  var btnScheduleConsultation = document.getElementById("btn-schedule-consultation");
+  var btnMessageAgent = document.getElementById("btn-message-agent");
 
   function parseJson(r) {
     return r.text().then(function (text) {
@@ -93,6 +103,71 @@
 
       var showOwner = list.some(function (a) { return a.owner_email != null; });
       if (thOwner) thOwner.style.display = showOwner ? "" : "none";
+
+      // If this is a client (no owner_email fields), use the first applicant to drive progress + status.
+      var isAgent = showOwner;
+      if (!isAgent && list.length > 0) {
+        var primary = list[0];
+
+        // Progress: map status to 1–6 steps
+        var step = 1;
+        var s = (primary.status || "").toLowerCase();
+        if (s === "documents_accepted") step = 2;
+        else if (s === "in_review") step = 3;
+        else if (s === "consultation_scheduled") step = 4;
+        else if (s === "application_process") step = 5;
+        else if (s === "scholarship_assistance" || s === "accepted") step = 6;
+
+        if (progressSteps) {
+          var items = progressSteps.querySelectorAll("li");
+          items.forEach(function (li) {
+            var n = parseInt(li.getAttribute("data-step") || "0", 10);
+            li.classList.remove("is-complete", "is-current");
+            if (n < step) li.classList.add("is-complete");
+            if (n === step) li.classList.add("is-current");
+          });
+        }
+
+        if (statusLineEl) statusLineEl.textContent = "Status: " + (primary.status || "—");
+        if (statusAgentEl) statusAgentEl.textContent = "Assigned agent: —";
+        if (statusUpdatedEl) statusUpdatedEl.textContent = "Last update: " + formatDate(primary.created_at);
+
+        // Wire quick actions to profile/dashboard routes using the primary applicant id
+        var pid = primary.id;
+        if (btnUploadDocs) {
+          btnUploadDocs.onclick = function () {
+            if (pid) window.location.href = "/profile/" + pid + "#documents";
+          };
+        }
+        if (btnUpdateProfile) {
+          btnUpdateProfile.onclick = function () {
+            if (pid) window.location.href = "/profile/" + pid + "#profile";
+          };
+        }
+        if (btnPayServices) {
+          btnPayServices.onclick = function () {
+            window.location.href = "/payments";
+          };
+        }
+        if (btnScheduleConsultation) {
+          btnScheduleConsultation.onclick = function () {
+            window.location.href = "/consultations";
+          };
+        }
+        if (btnMessageAgent) {
+          btnMessageAgent.onclick = function () {
+            if (pid) window.location.href = "/messages?applicant_id=" + pid;
+          };
+        }
+
+        if (notificationsEl) {
+          // Placeholder: show a simple hint until real notifications are wired
+          if (notificationsEl.querySelector(".notifications-empty")) {
+            notificationsEl.querySelector(".notifications-empty").textContent =
+              "You will see document updates, feedback, and consultation notices here.";
+          }
+        }
+      }
 
       if (tbody) tbody.innerHTML = "";
       list.forEach(function (a) {

@@ -35,6 +35,12 @@ def create_applicant(
         first_name=payload.first_name,
         last_name=payload.last_name,
         latest_education=payload.latest_education,
+        service_interest=payload.service_interest,
+        country_of_residence=payload.country_of_residence,
+        study_destination=payload.study_destination,
+        level_of_study=payload.level_of_study,
+        annual_budget=payload.annual_budget,
+        income_source=payload.income_source,
         status="draft",
     )
     session.add(applicant)
